@@ -3,6 +3,8 @@ package com.local.ms_order.domain.services;
 import com.local.ms_order.application.port.in.FindOrderUseCase;
 import com.local.ms_order.application.port.in.SaveOrderUseCase;
 import com.local.ms_order.application.port.out.OrderOutputPort;
+import com.local.ms_order.application.port.out.OrderProducerOutputPort;
+import com.local.ms_order.application.utils.JsonUtil;
 import com.local.ms_order.domain.enums.OrderType;
 import com.local.ms_order.domain.model.Order;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService implements SaveOrderUseCase, FindOrderUseCase {
     private final OrderOutputPort orderOutputPort;
+    private final OrderProducerOutputPort orderProducerOutputPort;
 
     @Override
     public Order findOrder(String id) {
@@ -56,6 +59,7 @@ public class OrderService implements SaveOrderUseCase, FindOrderUseCase {
         }
         if(order.getOrderType()==OrderType.ENCARGO){
             //send to kafka
+            orderProducerOutputPort.sendOrderEvent(JsonUtil.convertOrderToJson(order));
         }
         return orderOutputPort.save(order);
     }
