@@ -9,8 +9,8 @@ import lombok.Setter;
 @Builder
 public class OrderLineResponse {
 
-    private int orderId;
-    private int productId;
+    private String orderId;
+    private String productId;
     private int quantity;
     private double price;
     private double subtotal;
