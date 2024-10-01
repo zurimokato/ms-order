@@ -53,15 +53,19 @@ public class OrderService implements SaveOrderUseCase, FindOrderUseCase {
     }
 
     @Override
-    public Order save(Order order) {
-        if(order.getOrderType()== OrderType.VENTA && order.getOrderLines().isEmpty()){
-            throw new RuntimeException("Venta order line is empty");
+    public Order save(Order order) throws Exception {
+        try {
+            if (order.getOrderType() == OrderType.VENTA && order.getOrderLines().isEmpty()) {
+                throw new RuntimeException("Venta order line is empty");
+            }
+            if (order.getOrderType() == OrderType.ENCARGO) {
+                //send to kafka
+                orderProducerOutputPort.sendOrderEvent(JsonUtil.convertOrderToJson(order));
+            }
+            return orderOutputPort.save(order);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
         }
-        if(order.getOrderType()==OrderType.ENCARGO){
-            //send to kafka
-            orderProducerOutputPort.sendOrderEvent(JsonUtil.convertOrderToJson(order));
-        }
-        return orderOutputPort.save(order);
     }
 
     @Override

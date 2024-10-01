@@ -68,7 +68,7 @@ public class OrderController implements OrderAPIPort {
     }
 
     @Override
-    public ResponseEntity<GenericResponse> createOrder(OrderRequest orderRequest) {
+    public ResponseEntity<GenericResponse> createOrder(OrderRequest orderRequest) throws Exception {
         OrderResponse orderResponse=orderRestMapper.toResponse(
                 saveOrderUseCase.save(orderRestMapper.toDomain(orderRequest))
         );

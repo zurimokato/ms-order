@@ -16,7 +16,7 @@ public interface OrderAPIPort {
     @GetMapping("/{orderId}")
     ResponseEntity<GenericResponse> getOrderByOrderId(@PathVariable("orderId") String orderId);
     @PostMapping
-    ResponseEntity<GenericResponse> createOrder(@RequestBody OrderRequest orderRequest);
+    ResponseEntity<GenericResponse> createOrder(@RequestBody OrderRequest orderRequest) throws Exception;
     @PutMapping
     ResponseEntity<GenericResponse> updateOrder(@RequestBody OrderRequest orderRequest);
 
