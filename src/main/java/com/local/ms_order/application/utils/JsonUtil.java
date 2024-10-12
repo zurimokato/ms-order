@@ -9,6 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JsonUtil {
 
+    private JsonUtil(){
+
+    }
+
     public static String convertOrderToJson(Order order) throws Exception {
         // Convierte el objeto Order a un JSON (puedes usar una librería como Jackson para esto)
         ObjectMapper mapper = JsonMapper.builder()
