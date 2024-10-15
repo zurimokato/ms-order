@@ -11,6 +11,7 @@ public class OrderLineEntity {
     private String orderId;
     private String productId;
     private int quantity;
+    private String name;
     private double price;
     private double subtotal;
 }
